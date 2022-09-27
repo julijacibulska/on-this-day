@@ -1,7 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { wikiReducer } from "features/wiki/wikiSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    wiki: wikiReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

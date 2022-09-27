@@ -4,12 +4,12 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./App";
 
-test("renders Hello world", () => {
+test("initially renders button to load events", () => {
   render(
     <Provider store={store}>
       <App />
     </Provider>
   );
 
-  expect(screen.getByText(/Hello world/i)).toBeInTheDocument();
+  expect(screen.getByText(/Load events/i)).toBeInTheDocument();
 });
