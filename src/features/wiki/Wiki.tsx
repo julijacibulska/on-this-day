@@ -1,13 +1,14 @@
 import React, { useMemo } from "react";
 
 import { useAppSelector, useAppDispatch } from "app/hooks";
-import { getThisDayEvents, selectWiki } from "./wikiSlice";
+import { getThisDayEvents, selectWiki, ThunkStatus } from "./wikiSlice";
+import { Loading } from "components/Loading";
 import { WikiEventResponse } from "types/wiki";
 
 const MANY_YEARS = 3000;
 
 export const Wiki = () => {
-  const { events } = useAppSelector(selectWiki);
+  const { events, status } = useAppSelector(selectWiki);
   const dispatch = useAppDispatch();
 
   const sortedEvents = useMemo(() => {
@@ -33,7 +34,14 @@ export const Wiki = () => {
   return (
     <div>
       <h1>Find out which events happened on this day!</h1>
-      <button onClick={() => dispatch(getThisDayEvents())}>Load events</button>
+
+      {status !== ThunkStatus.Complete && (
+        <button onClick={() => dispatch(getThisDayEvents())}>
+          Load events
+        </button>
+      )}
+
+      {status === ThunkStatus.Loading && <Loading />}
 
       {sortedEvents && (
         <ul>

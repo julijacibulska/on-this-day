@@ -5,6 +5,7 @@ import { fetchWikiOnThisDay } from "./wikiAPI";
 
 export enum ThunkStatus {
   Idle = "IDLE",
+  Complete = "COMPLETE",
   Loading = "LOADING",
   Failed = "FAILED",
 }
@@ -38,7 +39,7 @@ export const wikiReducer = createReducer(initialState, (builder) => {
       state.status = ThunkStatus.Loading;
     })
     .addCase(getThisDayEvents.fulfilled, (state, action) => {
-      state.status = ThunkStatus.Idle;
+      state.status = ThunkStatus.Complete;
       state.events = action.payload;
     })
     .addCase(getThisDayEvents.rejected, (state) => {
