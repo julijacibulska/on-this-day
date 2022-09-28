@@ -13,6 +13,7 @@ export enum ThunkStatus {
 export interface WikiState {
   events: WikiEventResponse;
   status: ThunkStatus;
+  error: string | undefined;
 }
 
 const initialState: WikiState = {
@@ -24,12 +25,13 @@ const initialState: WikiState = {
     holidays: [],
   },
   status: ThunkStatus.Idle,
+  error: undefined,
 };
 
 export const getThisDayEvents = createAsyncThunk(
   "wiki/getThisDayEvents",
   async () => {
-    return (await fetchWikiOnThisDay()) as WikiEventResponse;
+    return fetchWikiOnThisDay();
   }
 );
 
@@ -42,8 +44,9 @@ export const wikiReducer = createReducer(initialState, (builder) => {
       state.status = ThunkStatus.Complete;
       state.events = action.payload;
     })
-    .addCase(getThisDayEvents.rejected, (state) => {
+    .addCase(getThisDayEvents.rejected, (state, { error }) => {
       state.status = ThunkStatus.Failed;
+      state.error = error.message;
     });
 });
 

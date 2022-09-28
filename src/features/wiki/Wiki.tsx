@@ -1,15 +1,17 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { getThisDayEvents, selectWiki, ThunkStatus } from "./wikiSlice";
 import { Loading } from "components/Loading";
 import { WikiEventResponse } from "types/wiki";
+import { Modal } from "components/Modal";
 
 const MANY_YEARS = 3000;
 
 export const Wiki = () => {
-  const { events, status } = useAppSelector(selectWiki);
+  const { events, status, error } = useAppSelector(selectWiki);
   const dispatch = useAppDispatch();
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   const sortedEvents = useMemo(() => {
     return Object.entries(events)
@@ -31,14 +33,30 @@ export const Wiki = () => {
       );
   }, [events]);
 
+  const loadEvents = () => {
+    dispatch(getThisDayEvents());
+  };
+
+  useEffect(() => {
+    if (status === ThunkStatus.Failed) {
+      setIsErrorModalOpen(true);
+    }
+  }, [status, error]);
+
   return (
     <div>
       <h1>Find out which events happened on this day!</h1>
 
       {status !== ThunkStatus.Complete && (
-        <button onClick={() => dispatch(getThisDayEvents())}>
-          Load events
-        </button>
+        <button onClick={loadEvents}>Load events</button>
+      )}
+      {status === ThunkStatus.Failed && (
+        <Modal
+          title="Error"
+          message={error}
+          isOpen={isErrorModalOpen}
+          closeModal={() => setIsErrorModalOpen(false)}
+        />
       )}
 
       {status === ThunkStatus.Loading && <Loading />}
