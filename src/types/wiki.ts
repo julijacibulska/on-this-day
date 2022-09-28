@@ -54,3 +54,5 @@ export interface WikiEventResponse {
   events: WikiEventWithYear[];
   holidays: BaseWikiEvent[];
 }
+
+export type EventCategory = keyof WikiEventResponse;

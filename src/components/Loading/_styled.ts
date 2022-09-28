@@ -27,7 +27,7 @@ export const StyledLoadingOverlay = styled.div`
     top: 50%;
     transform: translate(-50%);
     border-radius: 50%;
-    border: 10px solid black;
+    border: 5px solid ${({ theme }) => theme.colors.primary};
     border-left-color: transparent;
     z-index: 2;
     animation: ${spin} 2s infinite ease-in-out;

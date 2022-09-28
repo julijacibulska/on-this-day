@@ -1,6 +1,10 @@
 import React from "react";
-import ReactModal from "react-modal";
-import { StyledModalTitle, StyledModalText } from "./_styled";
+import {
+  StyledModalTitle,
+  StyledModalText,
+  StyledModal,
+  StyledModalButtonContainer,
+} from "./_styled";
 
 interface Props {
   title: string;
@@ -16,10 +20,12 @@ export const Modal = ({
   closeModal,
 }: Props): JSX.Element => {
   return (
-    <ReactModal isOpen={isOpen} onRequestClose={closeModal}>
+    <StyledModal isOpen={isOpen} onRequestClose={closeModal}>
       <StyledModalTitle>{title}</StyledModalTitle>
       {message && <StyledModalText>{message}</StyledModalText>}
-      <button onClick={closeModal}>Ok</button>
-    </ReactModal>
+      <StyledModalButtonContainer>
+        <button onClick={closeModal}>Ok</button>
+      </StyledModalButtonContainer>
+    </StyledModal>
   );
 };
