@@ -33,6 +33,7 @@ export const GlobalStyle = createGlobalStyle`
 
   table {
     border-collapse: collapse;
+    width: 100%;
   }
 
   thead {

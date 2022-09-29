@@ -9,6 +9,8 @@ const spin = keyframes`
   }
 `;
 
+const loaderRadius = 20;
+
 export const StyledLoadingOverlay = styled.div`
   position: fixed;
   background: rgb(255, 255, 255, 0.3);
@@ -21,11 +23,10 @@ export const StyledLoadingOverlay = styled.div`
     content: "";
     display: block;
     position: absolute;
-    width: 60px;
-    height: 60px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%);
+    width: ${loaderRadius * 2}px;
+    height: ${loaderRadius * 2}px;
+    left: calc(50% - ${loaderRadius}px);
+    top: calc(50% - ${loaderRadius}px);
     border-radius: 50%;
     border: 5px solid ${({ theme }) => theme.colors.primary};
     border-left-color: transparent;
