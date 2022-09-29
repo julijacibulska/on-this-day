@@ -1,6 +1,6 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { WikiEventWithYear } from "types/wiki";
+import { WikiEvent } from "types/wiki";
 import { fetchWikiOnThisDay } from "./wikiAPI";
 
 export enum ThunkStatus {
@@ -10,8 +10,8 @@ export enum ThunkStatus {
   Failed = "FAILED",
 }
 
-export interface WikiState {
-  events: WikiEventWithYear[];
+interface WikiState {
+  events: WikiEvent[];
   status: ThunkStatus;
   error: string | undefined;
 }

@@ -1,20 +1,14 @@
 import React, { useMemo } from "react";
-import { WikiEventWithYear } from "types/wiki";
+import { WikiEvent } from "types/wiki";
 import { StyledNoEventsText } from "./_styled";
 
 interface Props {
-  events: WikiEventWithYear[];
+  events: WikiEvent[];
 }
-
-const MANY_YEARS = 30000;
 
 export const EventList = ({ events }: Props): JSX.Element | null => {
   const sortedEvents = useMemo(() => {
-    return [...events].sort(
-      (a, b) =>
-        ("year" in a ? a.year : -MANY_YEARS) -
-        ("year" in b ? b.year : -MANY_YEARS)
-    );
+    return [...events].sort((a, b) => a.year - b.year);
   }, [events]);
 
   if (!sortedEvents.length) {
@@ -35,13 +29,11 @@ export const EventList = ({ events }: Props): JSX.Element | null => {
       </thead>
       <tbody>
         {sortedEvents.map((event, index) => (
-          <tr key={index}>
+          <tr data-testid="eventEntry" key={index}>
             <td>
-              {"year" in event && (
-                <strong>
-                  {Math.abs(event.year)}&nbsp;{event.year < 0 && "BC"}
-                </strong>
-              )}
+              <strong>
+                {Math.abs(event.year)}&nbsp;{event.year < 0 && "BC"}
+              </strong>
             </td>
             <td>{event.text}</td>
           </tr>

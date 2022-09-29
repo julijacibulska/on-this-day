@@ -1,5 +1,3 @@
-export type ColorKey = keyof typeof styledTheme["colors"];
-
 export const styledTheme = {
   colors: {
     primary: "#0984e3",

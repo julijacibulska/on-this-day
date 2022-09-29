@@ -5,7 +5,7 @@ import { fireEvent, screen } from "@testing-library/react";
 import { renderWithProviders } from "utils/test-utils";
 import { Wiki } from "../Wiki";
 import { WikiEventResponse } from "types/wiki";
-import { getWikiRequestUrl } from "../wikiAPI";
+import { buildWikiTodayRequestUrl } from "../wikiAPI";
 
 const mockResponse: WikiEventResponse = {
   births: [
@@ -23,7 +23,7 @@ const mockResponse: WikiEventResponse = {
   ],
 };
 
-const requestUrl = getWikiRequestUrl();
+const requestUrl = buildWikiTodayRequestUrl();
 
 const server = setupServer(
   rest.get(requestUrl, (req, res, ctx) => {
@@ -54,8 +54,8 @@ test("fetches & receives an birthday table after clicking the 'Load birthdays' b
   expect(await screen.findByTestId("eventsTable")).toBeInTheDocument();
 
   // Additional row is for tableHead
-  expect(screen.getAllByRole("row")).toHaveLength(
-    1 + mockResponse.births.length
+  expect(screen.getAllByTestId("eventEntry")).toHaveLength(
+    mockResponse.births.length
   );
   expect(
     screen.queryByRole("button", { name: /Load birthdays/i })

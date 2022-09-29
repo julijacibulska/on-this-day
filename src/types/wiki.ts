@@ -38,15 +38,12 @@ interface Page {
   extract_html: string;
 }
 
-export interface BaseWikiEvent {
+export interface WikiEvent {
   text: string;
   pages: Page[];
-}
-
-export interface WikiEventWithYear extends BaseWikiEvent {
   year: number;
 }
 
 export interface WikiEventResponse {
-  births: WikiEventWithYear[];
+  births: WikiEvent[];
 }

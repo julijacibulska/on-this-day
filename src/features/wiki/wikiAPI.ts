@@ -1,6 +1,6 @@
 import { WikiEventResponse } from "types/wiki";
 
-export const getWikiRequestUrl = () => {
+export const buildWikiTodayRequestUrl = () => {
   const today = new Date();
   const month = today.getMonth() + 1;
   const day = today.getDate();
@@ -9,7 +9,7 @@ export const getWikiRequestUrl = () => {
 };
 
 export const fetchWikiOnThisDay = async (): Promise<WikiEventResponse> => {
-  const response = await fetch(getWikiRequestUrl(), {
+  const response = await fetch(buildWikiTodayRequestUrl(), {
     headers: {
       Authorization: `Bearer ${process.env.REACT_APP_WIKI_ACCESS_TOKEN}`,
     },
