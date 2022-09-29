@@ -4,7 +4,7 @@ The app shows the list of historic birthdays that happened on this date after a 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 
-# Note about credentials
+## Note about credentials
 
 Since this is a small test project and authentification was not part of the requirements, it was decided to use Wiki Personal access token. I acknowledge that this is not secure, but since this will not be publicly available for long and is meant for demonstration purposes only, I would consider that a good enough choice. The token is not stored in the repo.
 

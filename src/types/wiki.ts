@@ -48,11 +48,5 @@ export interface WikiEventWithYear extends BaseWikiEvent {
 }
 
 export interface WikiEventResponse {
-  selected: WikiEventWithYear[];
   births: WikiEventWithYear[];
-  deaths: WikiEventWithYear[];
-  events: WikiEventWithYear[];
-  holidays: BaseWikiEvent[];
 }
-
-export type EventCategory = keyof WikiEventResponse;

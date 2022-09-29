@@ -1,6 +1,6 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { WikiEventResponse } from "types/wiki";
+import { WikiEventWithYear } from "types/wiki";
 import { fetchWikiOnThisDay } from "./wikiAPI";
 
 export enum ThunkStatus {
@@ -11,19 +11,13 @@ export enum ThunkStatus {
 }
 
 export interface WikiState {
-  events: WikiEventResponse;
+  events: WikiEventWithYear[];
   status: ThunkStatus;
   error: string | undefined;
 }
 
 const initialState: WikiState = {
-  events: {
-    selected: [],
-    births: [],
-    deaths: [],
-    events: [],
-    holidays: [],
-  },
+  events: [],
   status: ThunkStatus.Idle,
   error: undefined,
 };
@@ -42,7 +36,7 @@ export const wikiReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getThisDayEvents.fulfilled, (state, action) => {
       state.status = ThunkStatus.Complete;
-      state.events = action.payload;
+      state.events = action.payload.births;
     })
     .addCase(getThisDayEvents.rejected, (state, { error }) => {
       state.status = ThunkStatus.Failed;

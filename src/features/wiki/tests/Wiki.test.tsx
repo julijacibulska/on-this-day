@@ -8,15 +8,19 @@ import { WikiEventResponse } from "types/wiki";
 import { getWikiRequestUrl } from "../wikiAPI";
 
 const mockResponse: WikiEventResponse = {
-  selected: [{ text: "Julia applied to LevelPath", year: 2022, pages: [] }],
-  births: [{ text: "A star was born", year: 123, pages: [] }],
-  deaths: [{ text: "Singer died", year: 1943, pages: [] }],
-  events: [
-    { text: "SmashingConf", year: 2019, pages: [] },
-    { text: "United States midterm election", year: 2022, pages: [] },
-    { text: "Latvian parlament election", year: 2022, pages: [] },
+  births: [
+    {
+      text: "Choi Ye-na, South Korean singer and dancer",
+      year: 1999,
+      pages: [],
+    },
+    { text: "John Lesley, Scottish bishop (d. 1596)", year: 1527, pages: [] },
+    {
+      text: "Pompey, Roman general and politician (d. 48 BC)",
+      year: -106,
+      pages: [],
+    },
   ],
-  holidays: [],
 };
 
 const requestUrl = getWikiRequestUrl();
@@ -33,15 +37,15 @@ afterEach(() => server.resetHandlers());
 
 afterAll(() => server.close());
 
-test("fetches & receives an event table after clicking the 'Load events' button", async () => {
+test("fetches & receives an birthday table after clicking the 'Load birthdays' button", async () => {
   renderWithProviders(<Wiki />);
 
   expect(
-    screen.getByRole("button", { name: /Load events/i })
+    screen.getByRole("button", { name: /Load birthdays/i })
   ).toBeInTheDocument();
   expect(screen.queryByTestId("loader")).not.toBeInTheDocument();
 
-  fireEvent.click(screen.getByRole("button", { name: /Load events/i }));
+  fireEvent.click(screen.getByRole("button", { name: /Load birthdays/i }));
   expect(
     screen.queryByText(/No events were recorded for this day/i)
   ).not.toBeInTheDocument();
@@ -50,9 +54,11 @@ test("fetches & receives an event table after clicking the 'Load events' button"
   expect(await screen.findByTestId("eventsTable")).toBeInTheDocument();
 
   // Additional row is for tableHead
-  expect(screen.getAllByRole("row")).toHaveLength(1 + 6);
+  expect(screen.getAllByRole("row")).toHaveLength(
+    1 + mockResponse.births.length
+  );
   expect(
-    screen.queryByRole("button", { name: /Load events/i })
+    screen.queryByRole("button", { name: /Load birthdays/i })
   ).not.toBeInTheDocument();
   expect(screen.queryByTestId("loader")).not.toBeInTheDocument();
 });
@@ -62,7 +68,7 @@ test("handles server error", async () => {
 
   renderWithProviders(<Wiki />);
 
-  fireEvent.click(screen.getByRole("button", { name: /Load events/i }));
+  fireEvent.click(screen.getByRole("button", { name: /Load birthdays/i }));
 
   expect(await screen.findByText(/Error/i)).toBeInTheDocument();
 });

@@ -48,7 +48,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   tr {
-    :nth-child(odd) {
+    :nth-child(even) {
       background: ${styledTheme.colors.surfaceBgDark}
     }
   }

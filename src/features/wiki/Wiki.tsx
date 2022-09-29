@@ -24,13 +24,13 @@ export const Wiki = () => {
 
   return (
     <div>
-      <StyledPageTitle>
-        Find out which events happened on this day!
-      </StyledPageTitle>
+      <StyledPageTitle>Find out who has birthday today!</StyledPageTitle>
 
-      {status !== ThunkStatus.Complete && (
+      {status === ThunkStatus.Complete ? (
+        <EventList events={events} />
+      ) : (
         <StyledCenterdButton onClick={loadEvents}>
-          Load events
+          Load birthdays
         </StyledCenterdButton>
       )}
 
@@ -44,8 +44,6 @@ export const Wiki = () => {
           closeModal={() => setIsErrorModalOpen(false)}
         />
       )}
-
-      {status === ThunkStatus.Complete && <EventList events={events} />}
     </div>
   );
 };
