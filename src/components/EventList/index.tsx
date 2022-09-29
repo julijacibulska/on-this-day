@@ -30,8 +30,11 @@ export const EventList = ({ events }: Props): JSX.Element | null => {
   const sortedEvents = useMemo(() => {
     return Object.entries(events)
       .flatMap(
-        ([category, events]: [string, WikiEventResponse[EventCategory]]) => {
-          return events.map((event) => ({
+        ([category, eventEntries]: [
+          string,
+          WikiEventResponse[EventCategory]
+        ]) => {
+          return eventEntries.map((event) => ({
             ...event,
             category,
           }));
@@ -53,7 +56,7 @@ export const EventList = ({ events }: Props): JSX.Element | null => {
   }
 
   return (
-    <table>
+    <table data-testid="eventsTable">
       <thead>
         <tr>
           <th>Year</th>

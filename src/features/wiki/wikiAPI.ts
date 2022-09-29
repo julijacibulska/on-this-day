@@ -1,12 +1,15 @@
 import { WikiEventResponse } from "types/wiki";
 
-export const fetchWikiOnThisDay = async (): Promise<WikiEventResponse> => {
+export const getWikiRequestUrl = () => {
   const today = new Date();
   const month = today.getMonth() + 1;
   const day = today.getDate();
-  const url = `https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/${month}/${day}`;
 
-  const response = await fetch(url, {
+  return `https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/all/${month}/${day}`;
+};
+
+export const fetchWikiOnThisDay = async (): Promise<WikiEventResponse> => {
+  const response = await fetch(getWikiRequestUrl(), {
     headers: {
       Authorization: `Bearer ${process.env.REACT_APP_WIKI_ACCESS_TOKEN}`,
     },

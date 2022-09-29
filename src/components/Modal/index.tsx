@@ -20,7 +20,12 @@ export const Modal = ({
   closeModal,
 }: Props): JSX.Element => {
   return (
-    <StyledModal isOpen={isOpen} onRequestClose={closeModal}>
+    <StyledModal
+      appElement={document.getElementById("root") || undefined}
+      ariaHideApp={process.env.NODE_ENV !== "test"}
+      isOpen={isOpen}
+      onRequestClose={closeModal}
+    >
       <StyledModalTitle>{title}</StyledModalTitle>
       {message && <StyledModalText>{message}</StyledModalText>}
       <StyledModalButtonContainer>
